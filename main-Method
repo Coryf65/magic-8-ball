@@ -1,0 +1,129 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace Magic_8_Ball_App
+{
+        /// <summary>
+        ///  Enrty Point For Magic 8 Ball App
+        /// </summary>
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+
+            // Preserve current console text color
+            ConsoleColor oldColor = Console.ForegroundColor;
+
+            Title();
+
+            //Instance
+            Random randomObject = new Random();
+
+            //This Line show the radom nums generated 1-10
+            //Console.WriteLine("{0}", randomObject.Next(10) + 1);
+
+            // Looping 
+            while (true)
+            {
+
+                // asksing the question
+                string questionString = GetQuestionFromUser();
+
+                int numberOfSecondsToSleep = randomObject.Next(5) + 1;
+                Console.WriteLine("Thinking about the answer,  standby ...");
+                // converting ms into seconds
+                Thread.Sleep(numberOfSecondsToSleep * 1000);
+
+                //make sure user asked a question
+                if(questionString.Length == 0)
+                {
+                    Console.WriteLine("You need to type a question fool !!!!");
+                    //dont run anymore start from the top
+                    continue;
+                }
+
+                // check if the user typed quit
+                if(questionString.ToLower() == "quit")
+                {
+                    break;
+                }
+
+                // if the user types you suck make fun of them
+                if(questionString.ToLower() == "you suck")
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Not as much as You SUCKFACE !!!");
+                    break;
+                }
+
+                // Get Random #
+                int randomNumber = randomObject.Next(4);
+
+                //use a random numbe rto generate a response
+                switch (randomNumber)
+                {
+                    case 0:
+                        {
+                            Console.WriteLine("NO!");
+                            break;
+                        }
+                    case 1:
+                        {
+                            Console.WriteLine("YES!");
+                            break;
+                        }
+                    case 2:
+                        {
+                            Console.WriteLine("Maybe");
+                            break;
+                        }
+                    case 3:
+                        {
+                            Console.WriteLine("Hell NO!");
+                            break;
+                        }
+                }
+
+            }
+
+            // Cleaning up (restoring defaults)
+            Console.ForegroundColor = oldColor;
+          
+        }
+       
+        
+        /// <summary>
+        ///  Tells what the app is and who created it
+        /// </summary>
+        static void Title()
+        {
+            //Change console text color
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.WriteLine("Magic 8 Ball (By: Cory) type quit to exit");
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        static string GetQuestionFromUser()
+        {
+            // Asks the user for a qusetion then stores question in questionString
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.Write("Ask a Question?: ");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            String questionString = Console.ReadLine();
+
+            // take whatever comes in an replace it with static --> string
+            return questionString;
+        }
+
+    }
+}
